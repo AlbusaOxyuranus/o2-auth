@@ -20,8 +20,8 @@ namespace O2.Auth.Web.Pages
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<O2User> userManager,
+            SignInManager<O2User> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
