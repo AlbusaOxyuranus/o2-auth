@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "O2.Auth.Web", "O2.Auth.Web\O2.Auth.Web.csproj", "{D3327660-0347-4332-BE3A-7A12F38E0F85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.Auth.Simple", "O2.Auth.Simple\O2.Auth.Simple.csproj", "{3B6D352A-D670-459D-BC2D-E40D5DF73691}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "O2.Auth.Simple", "O2.Auth.Simple\O2.Auth.Simple.csproj", "{C5FCB5CA-58C8-4FD5-9037-292F2BB7DB04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{D3327660-0347-4332-BE3A-7A12F38E0F85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3327660-0347-4332-BE3A-7A12F38E0F85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3327660-0347-4332-BE3A-7A12F38E0F85}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B6D352A-D670-459D-BC2D-E40D5DF73691}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B6D352A-D670-459D-BC2D-E40D5DF73691}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B6D352A-D670-459D-BC2D-E40D5DF73691}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B6D352A-D670-459D-BC2D-E40D5DF73691}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5FCB5CA-58C8-4FD5-9037-292F2BB7DB04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5FCB5CA-58C8-4FD5-9037-292F2BB7DB04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5FCB5CA-58C8-4FD5-9037-292F2BB7DB04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5FCB5CA-58C8-4FD5-9037-292F2BB7DB04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>aspnet-O2.Auth.Simple-7CBBD1EF-1B59-4A4E-9BE0-CD35E1CC52CC</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
