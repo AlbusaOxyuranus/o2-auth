@@ -92,7 +92,10 @@ namespace O2.Auth.Web.Pages.Account
             {
                 //TODO: what if the first succeeds but the second fails?
                 var setUserNameResult = await _userManager.SetUserNameAsync(user, Input.Email);
-                var setEmailResult = await _userManager.SetEmailAsync(user, Input.Email);
+                var setEmailResult =setUserNameResult.Succeeded 
+                    ? (await _userManager.SetEmailAsync(user, Input.Email)) 
+                    : IdentityResult.Failed();
+                
                 if (!setUserNameResult.Succeeded || !setEmailResult.Succeeded)
                 {
                     var userId = await _userManager.GetUserIdAsync(user);
