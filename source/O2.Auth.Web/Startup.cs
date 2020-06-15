@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -84,6 +85,8 @@ namespace O2.Auth.Web
             public Task SendEmailAsync(string email, string subject, string htmlMessage)
             {
                 _logger.LogWarning("Dummy IEmailSender implementation is being used!!!");
+                // added to be able to use the confirmation link
+                _logger.LogDebug($"{email}{Environment.NewLine}{subject}{Environment.NewLine}{htmlMessage}");
                 return Task.CompletedTask;
             }
         }
