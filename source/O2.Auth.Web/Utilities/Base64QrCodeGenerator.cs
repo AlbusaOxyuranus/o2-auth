@@ -4,11 +4,6 @@ using SkiaSharp.QrCode;
 
 namespace O2.Auth.Web.Utilities
 {
-    public interface IBase64QrCodeGenerator 
-    { 
-        string Generate(Uri target); 
-    } 
-
     public class Base64QrCodeGenerator : IBase64QrCodeGenerator 
     { 
         public string Generate(Uri target) 

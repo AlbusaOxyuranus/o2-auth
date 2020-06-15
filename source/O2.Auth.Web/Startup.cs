@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using O2.Auth.Web.Data;
+using O2.Auth.Web.Utilities;
 
 namespace O2.Auth.Web
 {
@@ -56,7 +57,7 @@ namespace O2.Auth.Web
             });
             
             services.AddSingleton<IEmailSender, DummyEmailSender>();
-            
+            services.AddSingleton<IBase64QrCodeGenerator, Base64QrCodeGenerator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
