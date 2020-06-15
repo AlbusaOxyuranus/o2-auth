@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using O2.Auth.Web.Data;
+using O2.Auth.Web.Policies.Handlers;
+using O2.Auth.Web.Policies.Requirements;
 using O2.Auth.Web.Utilities;
 
 namespace O2.Auth.Web
@@ -67,7 +71,15 @@ namespace O2.Auth.Web
                 })
                 .AddEntityFrameworkStores<AuthDbContext>()
                 .AddDefaultTokenProviders();
-
+            
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("SamplePolicy", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
+                options.AddPolicy("AnotherSamplePolicy", policy => policy.Requirements.Add(new UsernameRequirement(".*someone.*")));
+            });
+            
+            services.AddSingleton<IAuthorizationHandler, UsernameRequirementHandler>();
+            
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Login";
