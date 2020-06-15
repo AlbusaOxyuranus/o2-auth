@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using O2.Auth.Web.Data;
+using O2.Auth.Web.Resources;
 
 namespace O2.Auth.Web.Pages
 {
@@ -17,11 +19,17 @@ namespace O2.Auth.Web.Pages
     {
         private readonly SignInManager<O2User> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IStringLocalizer<LoginModel> _localizer;
+        private readonly IStringLocalizer<SharedResource> _sharedLocalizer;
 
-        public LoginModel(SignInManager<O2User> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<O2User> signInManager, ILogger<LoginModel> logger,
+            IStringLocalizer<LoginModel> localizer,
+            IStringLocalizer<SharedResource> sharedLocalizer)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _localizer = localizer;
+            _sharedLocalizer = sharedLocalizer;
         }
 
         [BindProperty]
@@ -44,7 +52,7 @@ namespace O2.Auth.Web.Pages
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "RememberMe")]
             public bool RememberMe { get; set; }
         }
 
@@ -88,7 +96,7 @@ namespace O2.Auth.Web.Pages
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, _localizer["InvalidLoginAttempt"]);
                     return Page();
                 }
             }
