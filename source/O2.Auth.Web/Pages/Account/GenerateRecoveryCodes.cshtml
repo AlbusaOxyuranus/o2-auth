@@ -1,6 +1,6 @@
 @page
 @model O2.Auth.Web.Pages.Account.GenerateRecoveryCodesModel 
-<div>@Model.StatusMessage</div> 
+<partial name="_StatusMessage" for="StatusMessage" />  
 <div class="alert alert-warning" role="alert"> 
     <p> 
         <span class="glyphicon glyphicon-warning-sign"></span> 

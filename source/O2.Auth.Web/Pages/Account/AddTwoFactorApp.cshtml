@@ -1,7 +1,7 @@
 @page
 @model O2.Auth.Web.Pages.Account.AddTwoFactorAppModel 
  
-<div>@Model.StatusMessage</div> 
+<partial name="_StatusMessage" for="StatusMessage" />  
 <div> 
     <p>To use an authenticator app go through the following steps:</p> 
     <ol class="list"> 

@@ -69,6 +69,8 @@ namespace O2.Auth.Web
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHsts(); // https://www.owasp.org/index.php/HTTP_Strict_Transport_Security_Cheat_Sheet
+            app.UseHttpsRedirection(); // if a request comes in HTTP, it's redirect to HTTPS
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();

@@ -7,7 +7,7 @@ using O2.Auth.Web.Data;
 
 namespace O2.Auth.Web.Pages.Account
 {
-     public class ManageTwoFactorModel : PageModel
+  public class ManageTwoFactorModel : PageModel
     {
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}";
 

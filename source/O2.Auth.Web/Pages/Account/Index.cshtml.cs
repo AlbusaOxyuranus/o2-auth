@@ -32,6 +32,8 @@ namespace O2.Auth.Web.Pages.Account
 
         public bool IsEmailConfirmed { get; set; }
 
+        public bool IsTwoFactorEnabled { get; set; }
+        
         [TempData]
         public string StatusMessage { get; set; }
 
@@ -69,7 +71,9 @@ namespace O2.Auth.Web.Pages.Account
                 PhoneNumber = phoneNumber
             };
 
+          
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
+            IsTwoFactorEnabled = user.TwoFactorEnabled;
 
             return Page();
         }
