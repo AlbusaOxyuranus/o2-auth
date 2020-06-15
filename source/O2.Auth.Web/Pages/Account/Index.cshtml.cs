@@ -90,16 +90,13 @@ namespace O2.Auth.Web.Pages.Account
             var email = await _userManager.GetEmailAsync(user);
             if (Input.Email != email)
             {
-                //TODO: what if the first succeeds but the second fails?
+                // In this application, the email and the username are the same, so when we update the email we need to update the user name.
+                //TODO: what if setting the email succeeds but the username fails?
                 var setUserNameResult = await _userManager.SetUserNameAsync(user, Input.Email);
-                var setEmailResult =setUserNameResult.Succeeded 
-                    ? (await _userManager.SetEmailAsync(user, Input.Email)) 
-                    : IdentityResult.Failed();
-                
-                if (!setUserNameResult.Succeeded || !setEmailResult.Succeeded)
+                if (!setUserNameResult.Succeeded)
                 {
                     var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
+                    throw new InvalidOperationException($"Unexpected error occurred setting name for user with ID '{userId}'.");
                 }
             }
 
@@ -137,7 +134,7 @@ namespace O2.Auth.Web.Pages.Account
             var email = await _userManager.GetEmailAsync(user);
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.Page(
-                "/Account/ConfirmEmail",
+                "/ConfirmEmail",
                 pageHandler: null,
                 values: new { userId = userId, code = code },
                 protocol: Request.Scheme);
