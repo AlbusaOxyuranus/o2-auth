@@ -1,0 +1,29 @@
+@page
+@model O2.Auth.Web.Pages.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <h4>Create a new account.</h4>
+    <hr/>
+    <div asp-validation-summary="All" ></div>
+    <div class="form-group">
+        <label asp-for="Input.Email"></label>
+        <input asp-for="Input.Email" />
+        <span asp-validation-for="Input.Email" ></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.Password"></label>
+        <input asp-for="Input.Password" />
+        <span asp-validation-for="Input.Password" ></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Input.ConfirmPassword"></label>
+        <input asp-for="Input.ConfirmPassword" />
+        <span asp-validation-for="Input.ConfirmPassword" ></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
