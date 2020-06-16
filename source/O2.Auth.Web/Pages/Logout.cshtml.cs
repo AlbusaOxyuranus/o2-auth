@@ -8,7 +8,6 @@ using O2.Auth.Web.Data;
 
 namespace O2.Auth.Web.Pages
 {
-    [AllowAnonymous]
     public class LogoutModel : PageModel
     {
         private readonly SignInManager<O2User> _signInManager;

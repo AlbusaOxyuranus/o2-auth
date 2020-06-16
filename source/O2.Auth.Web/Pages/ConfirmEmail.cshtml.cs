@@ -8,7 +8,6 @@ using O2.Auth.Web.Data;
 
 namespace O2.Auth.Web.Pages
 {
-    [AllowAnonymous]
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<O2User> _userManager;

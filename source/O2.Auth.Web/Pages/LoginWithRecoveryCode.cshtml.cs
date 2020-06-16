@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using O2.Auth.Web.Data;
 
 namespace O2.Auth.Web.Pages
-{  [AllowAnonymous]
+{ 
     public class LoginWithRecoveryCodeModel : PageModel
     {
         private readonly SignInManager<O2User> _signInManager;

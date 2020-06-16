@@ -9,8 +9,8 @@ using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Secret = IdentityServer4.EntityFramework.Entities.Secret;
+
 
 namespace O2.Auth.Web.IoC
 {
@@ -100,7 +100,10 @@ namespace O2.Auth.Web.IoC
                 {
                     ClientId = "WebFrontend",
                     AllowedGrantTypes = GrantTypes.Code,
-                    ClientSecrets = {new Secret("secret".Sha256())},
+                    ClientSecrets =
+                    {
+                        new IdentityServer4.Models.Secret("secret".Sha256())
+                    },
                     RedirectUris = new[] {"http://localhost:5000/signin-oidc"},
                     RefreshTokenUsage = TokenUsage.OneTimeOnly,
                     AllowedScopes =

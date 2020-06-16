@@ -14,7 +14,6 @@ using O2.Auth.Web.Resources;
 
 namespace O2.Auth.Web.Pages
 {
-   [AllowAnonymous]
     public class LoginModel : PageModel
     {
         private readonly SignInManager<O2User> _signInManager;

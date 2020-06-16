@@ -15,7 +15,7 @@ namespace O2.Auth.Web.IoC
     {
         public static IServiceCollection AddConfiguredIdentity(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("AuthDbContext"));
+            services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("AuthDbContext")));
             
             services
                 .AddIdentity<O2User, IdentityRole>(options =>

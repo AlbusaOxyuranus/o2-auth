@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace O2.Auth.Web.Migrations
+namespace O2.Auth.Web.Migrations.Auth
 {
     public partial class InitialCreate : Migration
     {
