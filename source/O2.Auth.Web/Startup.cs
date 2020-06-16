@@ -1,94 +1,36 @@
-﻿using System;
-using System.Globalization;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using O2.Auth.Web.Data;
-using O2.Auth.Web.Policies.Handlers;
-using O2.Auth.Web.Policies.Requirements;
-using O2.Auth.Web.Utilities;
+using O2.Auth.Web.IoC;
 
 namespace O2.Auth.Web
 {
     public class Startup
     {
         private readonly IConfiguration _configuration;
+        private readonly IHostingEnvironment _environment;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             _configuration = configuration;
+            _environment = environment;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddRazorPagesOptions(options => { options.Conventions.AuthorizeFolder("/Account"); })
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                .AddDataAnnotationsLocalization();
-
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                var cultures = new[]
+            services
+                .AddConfiguredMvc()
+                .AddConfiguredLocalization()
+                .AddConfiguredIdentity(_configuration)
+                .ConfigureApplicationCookie(options =>
                 {
-                    new CultureInfo("ru"),
-                    new CultureInfo("en"),
-                    new CultureInfo("pt")
-                };
-                options.DefaultRequestCulture = new RequestCulture("en");
-                options.SupportedCultures = cultures;
-                options.SupportedUICultures = cultures;
-            });
-
-            services.AddDbContext<AuthDbContext>(options =>
-            {
-                options.UseSqlServer(_configuration.GetConnectionString("AuthDbContext"));
-            });
-
-            services.AddIdentity<O2User, IdentityRole>(options =>
-                {
-                    options.Password.RequireDigit = false;
-                    //TODO: uncomment after some tests
-                    //options.Password.RequiredLength = 12;
-                    options.Password.RequireLowercase = false;
-                    options.Password.RequireUppercase = false;
-                    options.Password.RequireNonAlphanumeric = false;
+                    options.LoginPath = "/Login";
+                    options.LogoutPath = "/Logout";
+                    options.AccessDeniedPath = "/AccessDenied";
                 })
-                .AddEntityFrameworkStores<AuthDbContext>()
-                .AddDefaultTokenProviders();
-            
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("SamplePolicy", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
-                options.AddPolicy("AnotherSamplePolicy", policy => policy.Requirements.Add(new UsernameRequirement(".*someone.*")));
-            });
-            
-            services.AddSingleton<IAuthorizationHandler, UsernameRequirementHandler>();
-            
-            services.ConfigureApplicationCookie(options =>
-            {
-                options.LoginPath = "/Login";
-                options.LogoutPath = "/Logout";
-                options.AccessDeniedPath = "/AccessDenied";
-            });
-
-            services.AddSingleton<IEmailSender, DummyEmailSender>();
-            services.AddSingleton<IBase64QrCodeGenerator, Base64QrCodeGenerator>();
+                .AddConfiguredIdentityServer(_environment, _configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -102,28 +44,11 @@ namespace O2.Auth.Web
             app.UseHsts(); // https://www.owasp.org/index.php/HTTP_Strict_Transport_Security_Cheat_Sheet
             app.UseHttpsRedirection(); // if a request comes in HTTP, it's redirect to HTTPS
             app.UseStaticFiles();
+            app.UseIdentityServer();
             app.UseRequestLocalization(app.ApplicationServices
                 .GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
             app.UseAuthentication();
             app.UseMvcWithDefaultRoute();
-        }
-
-        internal class DummyEmailSender : IEmailSender
-        {
-            private readonly ILogger<DummyEmailSender> _logger;
-
-            public DummyEmailSender(ILogger<DummyEmailSender> logger)
-            {
-                _logger = logger;
-            }
-
-            public Task SendEmailAsync(string email, string subject, string htmlMessage)
-            {
-                _logger.LogWarning("Dummy IEmailSender implementation is being used!!!");
-                // added to be able to use the confirmation link
-                _logger.LogDebug($"{email}{Environment.NewLine}{subject}{Environment.NewLine}{htmlMessage}");
-                return Task.CompletedTask;
-            }
         }
     }
 }
