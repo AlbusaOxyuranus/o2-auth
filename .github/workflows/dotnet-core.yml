@@ -8,7 +8,7 @@ on:
     tags:
       - v1
     paths:
-      - 'source/*'
+      - '/source/*'
   pull_request:
     branches:
       - master
